@@ -1,4 +1,4 @@
-package kr.co.restfulApi;
+package kr.co.restfulapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
