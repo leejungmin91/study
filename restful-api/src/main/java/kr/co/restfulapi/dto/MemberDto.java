@@ -13,14 +13,14 @@ public class MemberDto {
 
     private Long mbrNo;
 
-    private String id;
+    private String email;
 
     private String name;
 
     public static MemberDto toDto(Member member){
         return MemberDto.builder()
                 .mbrNo(member.getMbrNo())
-                .id(member.getId())
+                .email(member.getEmail())
                 .name(member.getName())
                 .build();
     }

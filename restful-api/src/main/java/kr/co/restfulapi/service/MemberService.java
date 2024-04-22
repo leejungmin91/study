@@ -51,9 +51,14 @@ public class MemberService {
     /**
      * 회원가입
      */
-    public MemberDto join(SignUpRequest request){
+    public MemberDto join(SignUpRequest request) {
+        duplicateMemberValidation(request.toEntity());
         Member member = memberRepository.save(request.toEntity());
         return MemberDto.toDto(member);
+    }
+
+    private void duplicateMemberValidation(Member member) {
+        if(memberRepository.existsByEmail(member.getEmail())) throw new IllegalStateException("이미 존재하는 회원입니다.");
     }
 
 }
