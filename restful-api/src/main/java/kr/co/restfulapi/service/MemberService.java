@@ -28,7 +28,7 @@ public class MemberService {
         List<Member> members = memberRepository.findAll();
         return members.stream()
                 .map(MemberDto::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -45,19 +45,20 @@ public class MemberService {
      */
     public void updateName(MemberDto memberDto) {
         memberRepository.findById(memberDto.getMbrNo())
-                .ifPresent(m -> m.setName(memberDto.getName()));
+                .ifPresent(m -> m.updateMember(memberDto.getEmail(), memberDto.getName()));
     }
 
     /**
      * 회원가입
      */
     public MemberDto join(SignUpRequest request) {
-        duplicateMemberValidation(request.toEntity());
-        Member member = memberRepository.save(request.toEntity());
+        Member requestEntity = request.toEntity();
+        validateDuplicateMember(requestEntity);
+        Member member = memberRepository.save(requestEntity);
         return MemberDto.toDto(member);
     }
 
-    private void duplicateMemberValidation(Member member) {
+    private void validateDuplicateMember(Member member) {
         if(memberRepository.existsByEmail(member.getEmail())) throw new IllegalStateException("이미 존재하는 회원입니다.");
     }
 

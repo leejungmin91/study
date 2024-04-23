@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -25,9 +26,9 @@ public class MemberController {
 	}
 
     @PostMapping
-	public ResponseEntity<SignUpRequest> join(SignUpRequest request) {
-		memberService.join(request);
-		return ResponseEntity.ok().build();
+	public ResponseEntity<MemberDto> join(@Valid SignUpRequest request) {
+		MemberDto memberDto = memberService.join(request);
+		return ResponseEntity.ok(memberDto);
 	}
 
 }

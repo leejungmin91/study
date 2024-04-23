@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
@@ -22,4 +21,9 @@ public class Member {
     private String name;
 
     private String password;
+
+    public void updateMember(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
 }
