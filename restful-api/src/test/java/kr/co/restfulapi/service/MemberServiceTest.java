@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -34,13 +36,6 @@ class MemberServiceTest {
 
         memberService.join(signUpRequest);
     }
-
-    /*@Test
-    void 전체_회원_조회_테스트() {
-        List<MemberDto> members = memberService.findAll();
-        members.forEach(m->log.info(m.toString()));
-        assertThat(members).isNotEmpty();
-    }*/
 
     @Test
     void 회원_조회_테스트() {
