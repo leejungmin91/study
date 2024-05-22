@@ -38,7 +38,7 @@ public class ProductService {
      */
     public ProductDto findById(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("회원번호를 확인해주세요."));
+                .orElseThrow(() -> new IllegalArgumentException("상품번호를 확인해주세요."));
         return ProductDto.toDto(product);
     }
 
