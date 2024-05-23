@@ -1,12 +1,8 @@
 package kr.co.restfulapi.service;
 
-import kr.co.restfulapi.dto.MemberDto;
-import kr.co.restfulapi.dto.ProductCreateDto;
+import kr.co.restfulapi.dto.ProductRequestDto;
 import kr.co.restfulapi.dto.ProductDto;
-import kr.co.restfulapi.dto.SignUpRequest;
-import kr.co.restfulapi.entity.Member;
 import kr.co.restfulapi.entity.Product;
-import kr.co.restfulapi.repository.MemberRepository;
 import kr.co.restfulapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +49,7 @@ public class ProductService {
     /**
      * 상품 등록
      */
-    public ProductDto createProduct(ProductCreateDto request) {
+    public ProductDto createProduct(ProductRequestDto request) {
         Product requestEntity = request.toEntity();
         Product product = productRepository.save(requestEntity);
         return ProductDto.toDto(product);

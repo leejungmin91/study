@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SignUpRequest {
+public class SignUpRequestDto {
 
     @NotBlank(message = "이메일은 필수입니다.")
     private String email;

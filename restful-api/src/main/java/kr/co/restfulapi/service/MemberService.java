@@ -1,7 +1,7 @@
 package kr.co.restfulapi.service;
 
 import kr.co.restfulapi.dto.MemberDto;
-import kr.co.restfulapi.dto.SignUpRequest;
+import kr.co.restfulapi.dto.SignUpRequestDto;
 import kr.co.restfulapi.entity.Member;
 import kr.co.restfulapi.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -51,7 +49,7 @@ public class MemberService {
     /**
      * 회원가입
      */
-    public MemberDto join(SignUpRequest request) {
+    public MemberDto join(SignUpRequestDto request) {
         Member requestEntity = request.toEntity();
         validateDuplicateMember(requestEntity);
         Member member = memberRepository.save(requestEntity);

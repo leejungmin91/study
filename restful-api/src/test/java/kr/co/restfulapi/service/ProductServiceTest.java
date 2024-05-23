@@ -1,7 +1,7 @@
 package kr.co.restfulapi.service;
 
 import kr.co.restfulapi.dto.MemberDto;
-import kr.co.restfulapi.dto.SignUpRequest;
+import kr.co.restfulapi.dto.SignUpRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class ProductServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        SignUpRequest signUpRequest = SignUpRequest.builder()
+        SignUpRequestDto signUpRequest = SignUpRequestDto.builder()
                 .email("min@test.com")
                 .name("이정민")
                 .password("1234")
@@ -44,7 +44,7 @@ class ProductServiceTest {
 
     @Test
     void 회원_가입_테스트() {
-        SignUpRequest signUpRequest = SignUpRequest.builder()
+        SignUpRequestDto signUpRequest = SignUpRequestDto.builder()
                 .email("min2@test.com")
                 .name("이정민")
                 .password("1234")
@@ -59,7 +59,7 @@ class ProductServiceTest {
 
     @Test
     void 중복_가입_테스트() {
-        SignUpRequest signUpRequest = SignUpRequest.builder()
+        SignUpRequestDto signUpRequest = SignUpRequestDto.builder()
                 .email("min@test.com")
                 .name("이정민")
                 .password("1234")

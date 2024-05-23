@@ -1,7 +1,7 @@
 package kr.co.restfulapi.rest;
 
 import kr.co.restfulapi.dto.MemberDto;
-import kr.co.restfulapi.dto.SignUpRequest;
+import kr.co.restfulapi.dto.SignUpRequestDto;
 import kr.co.restfulapi.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class MemberController {
 	}
 
     @PostMapping
-	public ResponseEntity<MemberDto> join(@Valid SignUpRequest request) {
+	public ResponseEntity<MemberDto> join(@Valid SignUpRequestDto request) {
 		MemberDto memberDto = memberService.join(request);
 		return ResponseEntity.ok(memberDto);
 	}

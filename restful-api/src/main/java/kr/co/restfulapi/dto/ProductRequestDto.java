@@ -1,13 +1,12 @@
 package kr.co.restfulapi.dto;
 
-import kr.co.restfulapi.entity.Member;
 import kr.co.restfulapi.entity.Product;
 import lombok.*;
 
 @Getter
 @Setter
 @Builder
-public class ProductCreateDto {
+public class ProductRequestDto {
 
     private Long productId;
 
