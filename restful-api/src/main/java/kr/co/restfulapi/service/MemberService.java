@@ -32,8 +32,8 @@ public class MemberService {
     /**
      * 회원 정보 검색
      */
-    public MemberDto findById(Long mbrNo) {
-        Member member = memberRepository.findById(mbrNo)
+    public MemberDto findById(Long id) {
+        Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("회원번호를 확인해주세요."));
         return MemberDto.toDto(member);
     }

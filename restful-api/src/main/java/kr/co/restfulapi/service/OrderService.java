@@ -12,6 +12,7 @@ import kr.co.restfulapi.repository.OrderRepository;
 import kr.co.restfulapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,13 +51,12 @@ public class OrderService {
     /**
      * 주문내역 저장
      */
-    public OrderDto order(OrderRequestDto request) {
-        List<Product> orderProducts = productRepository.findAllById(request.getProductIds());
-        Member member = memberRepository.getById(request.getMbrNo());
-        Order order = Order.builder()
-                .member(member)
-                .orderProducts(orderProducts)
-                .build();
+    public OrderDto order(Long productId, Long quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        Order order = new Order();
+        order.addOrderItem(product, quantity);
 
         Order saveOrder = orderRepository.save(order);
 

@@ -16,7 +16,7 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mbrNo;
+    private Long id;
 
     private String email;
 

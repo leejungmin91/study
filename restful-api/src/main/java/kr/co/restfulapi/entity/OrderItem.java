@@ -6,20 +6,24 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 @Entity
-public class OrderProduct {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
-    private Order order;
+    private Order order;*/
 
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
 
+    private Long quantity;
+
+    public OrderItem(Product product, Long quantity){
+        this.product = product;
+        this.quantity = quantity;
+    }
 }
