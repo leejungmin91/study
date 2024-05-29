@@ -24,8 +24,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
-    public ResponseEntity authenticate(LoginRequestDto loginRequestDto){
+    public HttpHeaders authenticate(LoginRequestDto loginRequestDto){
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
@@ -48,17 +47,15 @@ public class AuthenticationService {
                 //.domain("yourdomain.net")
                 .build();
 
-        return ResponseEntity.ok()
-                .header("Authorization", "Bearer "+jwtToken)
-                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Authorization", "Bearer "+jwtToken);
+        httpHeaders.set(HttpHeaders.SET_COOKIE, responseCookie.toString());
+
+        return httpHeaders;
     }
 
-    public ResponseEntity reissueToken(HttpServletRequest request){
-        String newToken = jwtTokenProvider.reissueToken(request);
-        return ResponseEntity.ok()
-                .header("Authorization", "Bearer "+newToken)
-                .build();
+    public String reissueToken(HttpServletRequest request){
+        return jwtTokenProvider.reissueToken(request);
     }
 
 }

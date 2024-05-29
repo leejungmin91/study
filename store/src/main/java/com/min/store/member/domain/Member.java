@@ -1,5 +1,6 @@
 package com.min.store.member.domain;
 
+import com.min.store.member.dto.response.MemberResponseDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,14 @@ public class Member implements UserDetails {
     public void updateMember(String email, String name) {
         this.email = email;
         this.name = name;
+    }
+
+    public MemberResponseDto toMemberResponseDto(){
+        return MemberResponseDto.builder()
+                .id(id)
+                .email(email)
+                .name(name)
+                .build();
     }
 
     public String encodePassword(String password) {

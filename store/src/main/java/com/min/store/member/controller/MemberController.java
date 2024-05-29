@@ -1,5 +1,7 @@
 package com.min.store.member.controller;
 
+
+import com.min.store.common.http.ApiResponse;
 import com.min.store.member.dto.request.SignUpRequestDto;
 import com.min.store.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +22,18 @@ public class MemberController {
         return ResponseEntity.ok("hello");
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity signUp(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
-        memberService.register(signUpRequestDto);
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getMember(@PathVariable Long id) {
+        ApiResponse apiResponse = memberService.getMember(id);
         return ResponseEntity.ok()
-                .build();
+                .body(apiResponse);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
+        ApiResponse apiResponse = memberService.register(signUpRequestDto);
+        return ResponseEntity.ok()
+                .body(apiResponse);
     }
 
 }
