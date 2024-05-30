@@ -33,8 +33,15 @@ public class MemberService {
                 .name(signUpRequestDto.getName())
                 .build();
 
+        duplicateMemberCheck(member);
+
         memberRepository.save(member);
 
         return ApiResponse.success();
+    }
+
+    private void duplicateMemberCheck(Member member){
+        boolean isMember = memberRepository.existsByEmail(member.getEmail());
+        if(!isMember) throw new IllegalStateException("이미 가입된 회원입니다.");
     }
 }

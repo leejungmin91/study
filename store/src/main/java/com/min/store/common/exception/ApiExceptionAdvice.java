@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ApiExceptionAdvice {
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<ApiResponse> exceptionHandler(HttpServletRequest request, final Exception e) {
+    public ResponseEntity<ApiResponse> exceptionHandler(final Exception e) {
 
         log.info("Exception Advice (Exception)");
 
@@ -37,7 +37,7 @@ public class ApiExceptionAdvice {
     }
 
     @ExceptionHandler({NoHandlerFoundException.class})
-    public ResponseEntity<ApiResponse> noHandlerFoundExceptionHandler(HttpServletRequest request, final Exception e) {
+    public ResponseEntity<ApiResponse> noHandlerFoundExceptionHandler(final Exception e) {
 
         log.info("Exception Advice (NoHandlerFoundException)");
 
@@ -51,7 +51,7 @@ public class ApiExceptionAdvice {
     }
 
     @ExceptionHandler({ApiException.class})
-    public ResponseEntity<ApiResponse> exceptionHandler(HttpServletRequest request, final ApiException e) {
+    public ResponseEntity<ApiResponse> exceptionHandler(final ApiException e) {
         return ResponseEntity
                 .status(e.getApiCode().getStatus())
                 .body(ApiResponse.builder()
@@ -61,7 +61,7 @@ public class ApiExceptionAdvice {
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ApiResponse> exceptionHandler(HttpServletRequest request, final MethodArgumentNotValidException e) {
+    public ResponseEntity<ApiResponse> exceptionHandler(final MethodArgumentNotValidException e) {
         ObjectError objectError = e.getBindingResult().getAllErrors().stream().findFirst().orElseThrow();
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
@@ -73,7 +73,7 @@ public class ApiExceptionAdvice {
     }
 
     @ExceptionHandler({RuntimeException.class})
-    public ResponseEntity<ApiResponse> exceptionHandler(HttpServletRequest request, final RuntimeException e) {
+    public ResponseEntity<ApiResponse> exceptionHandler(final RuntimeException e) {
 
         e.printStackTrace();
 
@@ -87,7 +87,7 @@ public class ApiExceptionAdvice {
     }
 
     @ExceptionHandler({AccessDeniedException.class})
-    public ResponseEntity<ApiResponse> exceptionHandler(HttpServletRequest request, final AccessDeniedException e) {
+    public ResponseEntity<ApiResponse> exceptionHandler(final AccessDeniedException e) {
 
         log.info("Exception Advice (AccessDeniedException)");
 

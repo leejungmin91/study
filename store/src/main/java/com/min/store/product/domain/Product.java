@@ -1,7 +1,5 @@
 package com.min.store.product.domain;
 
-import com.min.store.member.dto.response.MemberResponseDto;
-import com.min.store.product.dto.response.ProductResponseDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "PRODUCT")
 @Builder
 @Entity
+@IdClass(ProductId.class)
 public class Product {
 
     @Id
@@ -20,11 +19,11 @@ public class Product {
 
     private String name;
 
-    public ProductResponseDto toProductResponseDto(){
-        return ProductResponseDto.builder()
-                .id(id)
-                .name(name)
-                .build();
+    private Long price;
+
+    public void updateProduct(String name, Long price) {
+        this.name = name;
+        this.price = price;
     }
 
 }

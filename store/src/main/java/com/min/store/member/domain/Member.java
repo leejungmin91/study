@@ -2,13 +2,16 @@ package com.min.store.member.domain;
 
 import com.min.store.member.dto.response.MemberResponseDto;
 import lombok.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +19,7 @@ import java.util.List;
 @Table(name = "MEMBER")
 @Builder
 @Entity
+@IdClass(MemberId.class)
 public class Member implements UserDetails {
 
     @Id
@@ -39,6 +43,17 @@ public class Member implements UserDetails {
                 .email(email)
                 .name(name)
                 .build();
+    }
+
+    public static Optional<Member> currentMember(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof Member member) {
+                return Optional.of(member);
+            }
+        }
+        return Optional.empty();
     }
 
     public String encodePassword(String password) {

@@ -1,9 +1,9 @@
-package com.min.store.product.controller;
+package com.min.store.order.controller;
 
 
 import com.min.store.common.http.ApiResponse;
-import com.min.store.product.dto.request.ProductFormRequestDto;
-import com.min.store.product.service.ProductService;
+import com.min.store.order.dto.request.OrderRequestDto;
+import com.min.store.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,37 +12,37 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/order")
+public class OrderController {
 
-    private final ProductService productService;
+    private final OrderService orderService;
 
-    @GetMapping
-    public ResponseEntity<ApiResponse> getProducts() {
+    /*@GetMapping
+    public ResponseEntity<ApiResponse> getOrders() {
         ApiResponse apiResponse = productService.getProducts();
         return ResponseEntity.ok()
                 .body(apiResponse);
-    }
+    }*/
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getProduct(@PathVariable Long id) {
-        ApiResponse apiResponse = productService.getProduct(id);
+    public ResponseEntity<ApiResponse> getOrder(@PathVariable Long id) {
+        ApiResponse apiResponse = orderService.findOrder(id);
         return ResponseEntity.ok()
                 .body(apiResponse);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> register(@RequestBody @Valid ProductFormRequestDto productFormRequestDto) {
-        ApiResponse apiResponse = productService.register(productFormRequestDto);
+    public ResponseEntity<ApiResponse> order(@RequestBody @Valid OrderRequestDto orderRequestDto) {
+        ApiResponse apiResponse = orderService.order(orderRequestDto);
         return ResponseEntity.ok()
                 .body(apiResponse);
     }
 
-    @PutMapping
+    /*@PutMapping
     public ResponseEntity<ApiResponse> update(@RequestBody @Valid ProductFormRequestDto productFormRequestDto) {
         ApiResponse apiResponse = productService.update(productFormRequestDto);
         return ResponseEntity.ok()
                 .body(apiResponse);
-    }
+    }*/
 
 }

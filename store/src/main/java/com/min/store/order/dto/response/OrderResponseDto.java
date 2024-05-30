@@ -1,4 +1,4 @@
-package com.min.store.product.dto.response;
+package com.min.store.order.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponseDto {
+public class OrderResponseDto {
     private Long id;
     private String name;
     private Long price;
