@@ -30,16 +30,8 @@ public class SystemUserDetails implements UserDetailsService {
 
         log.info("{} - authenticate -> 인증", this.getClass());
 
-        Member member = memberRepository.findByEmail(username)
+        return memberRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Not Found Member"));
-
-        log.info("{} ::  member info", member);
-
-        return Member.builder()
-                .email(member.getEmail())
-                .name(member.getName())
-                .password(member.getPassword())
-                .build();
     }
 
     public PasswordEncoder passwordEncoder(){

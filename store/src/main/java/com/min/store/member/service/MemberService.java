@@ -3,6 +3,7 @@ package com.min.store.member.service;
 
 import com.min.store.common.http.ApiResponse;
 import com.min.store.member.domain.Member;
+import com.min.store.member.domain.MemberId;
 import com.min.store.member.dto.request.SignUpRequestDto;
 import com.min.store.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public ApiResponse getMember(Long id){
-        Member member = memberRepository.findById(id)
+        Member member = memberRepository.findById(new MemberId(id))
                 .orElseThrow(EntityNotFoundException::new);
 
         return ApiResponse.success(member.toMemberResponseDto());

@@ -1,5 +1,6 @@
 package com.min.store.member.config;
 
+import com.min.store.member.domain.Member;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -43,6 +45,7 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
+                .claim("member", authentication.getDetails())
                 .setIssuedAt(new Date()) // 토큰 발행 시간 정보
                 .setExpiration(new Date(new Date().getTime() + (tokenValidTime * 1000))) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)  // 사용할 암호화 알고리즘
@@ -69,8 +72,12 @@ public class JwtTokenProvider {
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        Object member = claims.get("member");
 
-        return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", null);
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(claims.getSubject(), "", null);
+        result.setDetails(member);
+
+        return result;
     }
 
     // Request의 Header에서 token 값을 가져옵니다.
@@ -83,6 +90,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveRefreshToken(HttpServletRequest request) {
+        if(request.getCookies() == null) throw new JwtException("refreshToken 이 존재하지 않습니다.");
         // ApiException 을 상위에서 처리
         String bearerToken = Arrays.stream(request.getCookies())
                 .filter(c -> "refreshToken".equals(c.getName()))

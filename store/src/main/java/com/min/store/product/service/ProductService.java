@@ -4,6 +4,7 @@ package com.min.store.product.service;
 import com.min.store.common.http.ApiResponse;
 import com.min.store.common.util.EntityConverter;
 import com.min.store.product.domain.Product;
+import com.min.store.product.domain.ProductId;
 import com.min.store.product.dto.request.ProductFormRequestDto;
 import com.min.store.product.dto.response.ProductResponseDto;
 import com.min.store.product.repository.ProductRepository;
@@ -36,7 +37,7 @@ public class ProductService {
     }
 
     public ApiResponse getProduct(Long id){
-        Product product = productRepository.findById(id)
+        Product product = productRepository.findById(new ProductId(id))
                 .orElseThrow(EntityNotFoundException::new);
 
         return ApiResponse.success(EntityConverter.toResponse(product, ProductResponseDto.class));
@@ -60,7 +61,7 @@ public class ProductService {
 
     @Transactional
     public ApiResponse update(ProductFormRequestDto productFormRequestDto){
-        Product product = productRepository.findById(productFormRequestDto.getId())
+        Product product = productRepository.findById(new ProductId(productFormRequestDto.getId()))
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다."));
         product.updateProduct(productFormRequestDto.getName(), productFormRequestDto.getPrice());
 

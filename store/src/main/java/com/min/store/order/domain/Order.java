@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "ORDER")
+@Table(name = "T_ORDER")
 @Builder
 @Entity
 public class Order {
@@ -21,7 +21,7 @@ public class Order {
     private Orderer orderer;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "ORDER_ITEMS", joinColumns = @JoinColumn(name = "order_id"))
+    @CollectionTable(name = "T_ORDER_ITEMS", joinColumns = @JoinColumn(name = "order_id"))
     @OrderColumn(name = "item_idx")
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class Order {
     private OrderStatus status;
 
     public void addOrderItem(OrderItem orderItem) {
-        orderItem.setOrder(this);
+        //orderItem.setOrder(this);
         orderItems.add(orderItem);
     }
 

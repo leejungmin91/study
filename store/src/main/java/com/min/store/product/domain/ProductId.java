@@ -15,11 +15,11 @@ import java.io.Serializable;
 @Embeddable
 public class ProductId implements Serializable {
 
-    @Column(name="product_id")
+    @Column(name="id")
     private Long id;
 
-    public ProductId(Long productId){
-        this.id = productId;
+    public ProductId(Long id){
+        this.id = id;
     }
 
 }

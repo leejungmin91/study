@@ -39,7 +39,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public ApiResponse findOrder(Long id){
-        Order order = orderRepository.findById(id)
+        Order order = orderRepository.findById(new OrderId(id))
                 .orElseThrow(EntityNotFoundException::new);
 
         return ApiResponse.success(EntityConverter.toResponse(order, OrderResponseDto.class));
@@ -59,6 +59,7 @@ public class OrderService {
                     return OrderItem.builder()
                             .product(productId)
                             .quantity(dto.getQuantity())
+                            .orderPrice(dto.getPrice())
                             .build();
                 }).toList();
 

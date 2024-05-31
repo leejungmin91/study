@@ -31,7 +31,10 @@ public class AuthenticationConfig implements AuthenticationProvider {
             throw new BadCredentialsException("Bad Credential");
         }
 
-        return new UsernamePasswordAuthenticationToken(member.getUsername(), null, null);
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(member.getUsername(), null, null);
+        result.setDetails(member);
+
+        return result;
     }
 
     @Override

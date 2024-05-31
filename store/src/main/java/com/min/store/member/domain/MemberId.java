@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Embeddable
 public class MemberId implements Serializable {
 
-    @Column(name="member_id")
+    @Column(name="id")
     private Long id;
 
     public MemberId(Long id){

@@ -17,10 +17,6 @@ public class OrderItem {
     @Embedded
     private ProductId product;
 
-    @ManyToOne
-    @JoinColumn(name = "order")
-    private Order order;
-
     @Column
     private int orderPrice;
 
