@@ -1,5 +1,6 @@
 package com.min.store.order.domain;
 
+import com.min.store.product.domain.ProductId;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,11 +28,6 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    public void addOrderItem(OrderItem orderItem) {
-        //orderItem.setOrder(this);
-        orderItems.add(orderItem);
-    }
 
     public void cancel() {
         if (status == OrderStatus.ORDER) {

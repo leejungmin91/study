@@ -46,22 +46,6 @@ public class Member implements UserDetails, Serializable {
                 .build();
     }
 
-    public static Optional<Member> currentMember(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object details = authentication.getDetails();
-            if(details instanceof Map map){
-                Member member = Member.builder()
-                        .id(Long.parseLong(String.valueOf(map.get("id"))))
-                        .email((String) map.get("email"))
-                        .name((String) map.get("name"))
-                        .build();
-                return Optional.of(member);
-            }
-        }
-        return Optional.empty();
-    }
-
     public String encodePassword(String password) {
         return new BCryptPasswordEncoder().encode(password);
     }

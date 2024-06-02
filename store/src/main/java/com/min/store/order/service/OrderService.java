@@ -7,6 +7,7 @@ import com.min.store.common.http.ApiResponse;
 import com.min.store.common.util.EntityConverter;
 import com.min.store.member.domain.Member;
 import com.min.store.member.domain.MemberId;
+import com.min.store.member.service.MemberService;
 import com.min.store.order.domain.*;
 import com.min.store.order.dto.request.OrderItemRequestDto;
 import com.min.store.order.dto.request.OrderRequestDto;
@@ -37,6 +38,7 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final MemberService memberService;
 
     public ApiResponse findOrder(Long id){
         Order order = orderRepository.findById(new OrderId(id))
@@ -63,8 +65,7 @@ public class OrderService {
                             .build();
                 }).toList();
 
-        Member member = Member.currentMember()
-                .orElseThrow(() -> new ApiException(ApiCode.ACCESS_DENIED));
+        Member member = memberService.currentMember();
 
         MemberId memberId = new MemberId(member.getId());
 
