@@ -49,7 +49,7 @@ public class MemberService {
 
     private void duplicateMemberCheck(Member member){
         boolean isMember = memberRepository.existsByEmail(member.getEmail());
-        if(!isMember) throw new IllegalStateException("이미 가입된 회원입니다.");
+        if(!isMember) throw new ApiException(ApiCode.DUPLICATE_MEMBER);
     }
 
     public Member currentMember(){
