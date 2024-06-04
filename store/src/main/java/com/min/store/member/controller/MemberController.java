@@ -36,4 +36,11 @@ public class MemberController {
                 .body(apiResponse);
     }
 
+    @GetMapping("/orders")
+    public ResponseEntity<ApiResponse> getMember() {
+        ApiResponse apiResponse = memberService.getMemberOrders();
+        return ResponseEntity.ok()
+                .body(apiResponse);
+    }
+
 }

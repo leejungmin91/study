@@ -1,33 +1,22 @@
 package com.min.store.order.service;
 
 
-import com.min.store.common.exception.ApiException;
-import com.min.store.common.http.ApiCode;
 import com.min.store.common.http.ApiResponse;
 import com.min.store.common.util.EntityConverter;
+import com.min.store.common.util.Utils;
 import com.min.store.member.domain.Member;
 import com.min.store.member.domain.MemberId;
 import com.min.store.member.service.MemberService;
 import com.min.store.order.domain.*;
-import com.min.store.order.dto.request.OrderItemRequestDto;
 import com.min.store.order.dto.request.OrderRequestDto;
 import com.min.store.order.dto.response.OrderResponseDto;
 import com.min.store.order.repository.OrderRepository;
-import com.min.store.product.domain.Product;
 import com.min.store.product.domain.ProductId;
-import com.min.store.product.dto.request.ProductFormRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.swing.text.DateFormatter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -38,13 +27,16 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final MemberService memberService;
 
     public ApiResponse findOrder(Long id){
         Order order = orderRepository.findById(new OrderId(id))
                 .orElseThrow(EntityNotFoundException::new);
 
         return ApiResponse.success(EntityConverter.toResponse(order, OrderResponseDto.class));
+    }
+
+    public List<Order> findByOrderer(Long id){
+        return orderRepository.findByOrdererMemberId(new MemberId(id));
     }
 
     @Transactional
@@ -65,7 +57,7 @@ public class OrderService {
                             .build();
                 }).toList();
 
-        Member member = memberService.currentMember();
+        Member member = Utils.currentMember();
 
         MemberId memberId = new MemberId(member.getId());
 

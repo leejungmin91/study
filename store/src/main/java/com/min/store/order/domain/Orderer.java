@@ -20,6 +20,10 @@ public class Orderer {
     @Column(name = "orderer_name")
     private String name;
 
+    public Orderer(MemberId memberId){
+        this.memberId = memberId;
+    }
+
     public Orderer(MemberId memberId, String name){
         this.memberId = memberId;
         this.name = name;
