@@ -11,8 +11,12 @@ import com.min.store.member.domain.MemberId;
 import com.min.store.member.dto.request.SignUpRequestDto;
 import com.min.store.member.repository.MemberRepository;
 import com.min.store.order.domain.Order;
+import com.min.store.order.domain.OrderItem;
 import com.min.store.order.dto.response.OrderResponseDto;
 import com.min.store.order.service.OrderService;
+import com.min.store.product.domain.Product;
+import com.min.store.product.domain.ProductId;
+import com.min.store.product.dto.response.ProductResponseDto;
 import com.min.store.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -60,9 +64,27 @@ public class MemberService {
     public ApiResponse getMemberOrders(){
         Member member = Utils.currentMember();
         List<Order> orders = orderService.findByOrderer(member.getId());
+
         List<OrderResponseDto> orderResponseDtos = orders.stream()
-                .map(order -> EntityConverter.toResponse(order, OrderResponseDto.class))
+                .map(order -> {
+                    List<ProductId> productIds = order.getOrderItems()
+                            .stream()
+                            .map(OrderItem::getProduct)
+                            .toList();
+
+                    List<Product> products = productRepository.findAllById(productIds);
+
+                    List<ProductResponseDto> productResponseDtos = products.stream()
+                            .map(product -> EntityConverter.toResponse(product, ProductResponseDto.class))
+                            .toList();
+
+                    OrderResponseDto orderResponseDto = EntityConverter.toResponse(order, OrderResponseDto.class);
+                    orderResponseDto.setOrderItems(productResponseDtos);
+
+                    return orderResponseDto;
+                })
                 .toList();
+
         return ApiResponse.success(orderResponseDtos);
     }
 

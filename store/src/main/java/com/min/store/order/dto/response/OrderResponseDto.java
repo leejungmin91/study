@@ -6,14 +6,12 @@ import com.min.store.order.domain.OrderItem;
 import com.min.store.order.domain.OrderStatus;
 import com.min.store.order.domain.Orderer;
 import com.min.store.product.dto.response.ProductResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
