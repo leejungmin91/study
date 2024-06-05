@@ -27,7 +27,7 @@ public class ProductService {
     public ApiResponse getProducts(){
         List<Product> product = productRepository.findAll()
                 .stream()
-                .sorted(Comparator.comparing(Product::getId))
+                .sorted(Comparator.comparing(p -> p.getProductId().getId()))
                 .toList();
 
         List<ProductResponseDto> responseDtos = product.stream()

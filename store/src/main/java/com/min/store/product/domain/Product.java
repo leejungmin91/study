@@ -10,12 +10,13 @@ import javax.persistence.*;
 @Table(name = "PRODUCT")
 @Builder
 @Entity
-@IdClass(ProductId.class)
 public class Product {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
+    @EmbeddedId
+    ProductId productId;
 
     private String name;
 

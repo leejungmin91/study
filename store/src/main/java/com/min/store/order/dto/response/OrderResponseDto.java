@@ -8,6 +8,7 @@ import com.min.store.order.domain.Orderer;
 import com.min.store.product.dto.response.ProductResponseDto;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,6 @@ import java.util.List;
 public class OrderResponseDto {
     private OrderId orderId;
     private Orderer orderer;
-    private List<ProductResponseDto> orderItems;
+    private List<ProductResponseDto> orderItems = new ArrayList<>();
     private OrderStatus status;
 }

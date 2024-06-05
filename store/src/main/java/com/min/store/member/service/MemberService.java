@@ -69,7 +69,7 @@ public class MemberService {
                 .map(order -> {
                     List<ProductId> productIds = order.getOrderItems()
                             .stream()
-                            .map(OrderItem::getProduct)
+                            .map(orderItem -> orderItem.getProduct())
                             .toList();
 
                     List<Product> products = productRepository.findAllById(productIds);
