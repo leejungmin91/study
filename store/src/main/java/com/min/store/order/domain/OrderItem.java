@@ -18,7 +18,7 @@ public class OrderItem {
     private ProductId product;
 
     @Column
-    private int orderPrice;
+    private Long orderPrice;
 
     @Column
     private int quantity;

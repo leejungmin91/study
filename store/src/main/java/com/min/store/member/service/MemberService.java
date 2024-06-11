@@ -28,6 +28,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -67,15 +68,26 @@ public class MemberService {
 
         List<OrderResponseDto> orderResponseDtos = orders.stream()
                 .map(order -> {
+                    Map<ProductId, OrderItem> productMap = order.getOrderItems()
+                            .stream()
+                            .collect(Collectors.toMap(OrderItem::getProduct, Function.identity()));
+
                     List<ProductId> productIds = order.getOrderItems()
                             .stream()
-                            .map(orderItem -> orderItem.getProduct())
+                            .map(OrderItem::getProduct)
                             .toList();
 
                     List<Product> products = productRepository.findAllById(productIds);
 
                     List<ProductResponseDto> productResponseDtos = products.stream()
-                            .map(product -> EntityConverter.toResponse(product, ProductResponseDto.class))
+                            .map(product -> {
+                                ProductResponseDto res = EntityConverter.toResponse(product, ProductResponseDto.class);
+                                Long orderPrice = productMap.get(product.getProductId()).getOrderPrice();
+                                int quantity = productMap.get(product.getProductId()).getQuantity();
+                                res.setOrderPrice(orderPrice);
+                                res.setQuantity(quantity);
+                                return res;
+                            })
                             .toList();
 
                     OrderResponseDto orderResponseDto = EntityConverter.toResponse(order, OrderResponseDto.class);

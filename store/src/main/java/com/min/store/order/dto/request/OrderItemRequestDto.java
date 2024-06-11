@@ -17,5 +17,5 @@ public class OrderItemRequestDto {
     private int quantity;
 
     @NotNull(message = "상품가격은 필수입니다.")
-    private int price;
+    private Long price;
 }
