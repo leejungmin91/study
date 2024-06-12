@@ -31,7 +31,8 @@ public class ProductService {
                 .toList();
 
         List<ProductResponseDto> responseDtos = product.stream()
-                .map(p -> EntityConverter.toResponse(p, ProductResponseDto.class)).toList();
+                .map(p -> EntityConverter.toResponse(p, ProductResponseDto.class))
+                .toList();
 
         return ApiResponse.success(responseDtos);
     }
