@@ -25,10 +25,10 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public ApiResponse getProducts(){
-        List<Product> product = productRepository.findAll()
-                .stream()
-                .sorted(Comparator.comparing(p -> p.getProductId().getId()))
-                .toList();
+        List<Product> product = productRepository.findAll();
+                //.stream()
+                //.sorted(Comparator.comparing(p -> p.getProductId().getId()))
+                //.toList();
 
         List<ProductResponseDto> responseDtos = product.stream()
                 .map(p -> EntityConverter.toResponse(p, ProductResponseDto.class))

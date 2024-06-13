@@ -1,6 +1,7 @@
 package com.min.store.member.repository;
 
 import com.min.store.member.domain.Member;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,11 @@ public class MemberQueryRepository {
 
     public Optional<Member> findByName(String name) {
         return Optional.ofNullable(query.selectFrom(member)
-                .where(member.name.eq(name))
+                .where(nameEq(name))
                 .fetchFirst());
+    }
+
+    private BooleanExpression nameEq(String name) {
+        return name != null ? member.name.eq(name) : null;
     }
 }
