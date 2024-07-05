@@ -1,5 +1,5 @@
 package com.min.store.member.config.security;
-import com.min.store.member.domain.Member;
+import com.min.store.member.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ public class AuthenticationConfig implements AuthenticationProvider {
 
         String id = (String) token.getPrincipal();
 
-        Member member = (Member) systemUserDetails.loadUserByUsername(id);
+        MemberEntity member = (MemberEntity) systemUserDetails.loadUserByUsername(id);
 
         if (!passwordEncoder().matches(authentication.getCredentials().toString(), member.encodePassword(member.getPassword()))){
             throw new BadCredentialsException("Bad Credential");

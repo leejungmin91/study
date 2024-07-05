@@ -4,14 +4,11 @@ package com.min.store.order.service;
 import com.min.store.common.http.ApiResponse;
 import com.min.store.common.util.EntityConverter;
 import com.min.store.common.util.Utils;
-import com.min.store.member.domain.Member;
-import com.min.store.member.domain.MemberId;
-import com.min.store.member.service.MemberService;
+import com.min.store.member.entity.MemberEntity;
 import com.min.store.order.domain.*;
 import com.min.store.order.dto.request.OrderRequestDto;
 import com.min.store.order.dto.response.OrderResponseDto;
 import com.min.store.order.repository.OrderRepository;
-import com.min.store.product.domain.ProductId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +54,7 @@ public class OrderService {
                             .build();
                 }).toList();
 
-        Member member = Utils.currentMember();
+        MemberEntity member = Utils.currentMember();
 
         MemberId memberId = new MemberId(member.getId());
 

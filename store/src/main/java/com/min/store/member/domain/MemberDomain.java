@@ -1,53 +1,38 @@
 package com.min.store.member.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.min.store.member.dto.response.MemberResponseDto;
 import lombok.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "MEMBER")
-@Builder
-@Entity
-@IdClass(MemberId.class)
-public class Member implements UserDetails, Serializable {
+public class MemberDomain implements UserDetails, Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long id;
+    private final String email;
+    private final String name;
+    private final String password;
 
-    private String email;
-
-    private String name;
-
-    @JsonIgnore
-    private String password;
-
-    public void updateMember(String email, String name) {
+    @Builder
+    public MemberDomain(Long id, String email, String name, String password) {
+        this.id = id;
         this.email = email;
         this.name = name;
+        this.password = password;
     }
 
-    public MemberResponseDto toMemberResponseDto(){
-        return MemberResponseDto.builder()
-                .id(id)
+    public static MemberDomain from(String email, String name, String password) {
+        return MemberDomain.builder()
                 .email(email)
                 .name(name)
+                .password(password)
                 .build();
-    }
-
-    public String encodePassword(String password) {
-        return new BCryptPasswordEncoder().encode(password);
     }
 
     @JsonIgnore

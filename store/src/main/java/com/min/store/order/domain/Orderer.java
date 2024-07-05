@@ -1,6 +1,5 @@
 package com.min.store.order.domain;
 
-import com.min.store.member.domain.MemberId;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,5 @@
 package com.min.store.order.domain;
 
-import com.min.store.product.domain.ProductId;
 import lombok.*;
 
 import javax.persistence.*;

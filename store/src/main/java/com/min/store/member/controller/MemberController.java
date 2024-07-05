@@ -2,6 +2,9 @@ package com.min.store.member.controller;
 
 
 import com.min.store.common.http.ApiResponse;
+import com.min.store.member.domain.MemberDomain;
+import com.min.store.member.domain.MemberSignUpDomain;
+import com.min.store.member.dto.MemberResponseDto;
 import com.min.store.member.dto.request.SignUpRequestDto;
 import com.min.store.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -24,23 +27,29 @@ public class MemberController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getMember(@PathVariable Long id) {
-        ApiResponse apiResponse = memberService.getMember(id);
+        MemberDomain memberDomain = memberService.getById(id);
         return ResponseEntity.ok()
-                .body(apiResponse);
+                .body(ApiResponse.success(
+                        MemberResponseDto.from(memberDomain))
+                );
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
-        ApiResponse apiResponse = memberService.register(signUpRequestDto);
+    public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid MemberSignUpDomain memberSignUpDomain) {
+        MemberDomain memberDomain = memberService.register(memberSignUpDomain);
         return ResponseEntity.ok()
-                .body(apiResponse);
+                .body(ApiResponse.success(
+                        MemberResponseDto.from(memberDomain))
+                );
     }
 
-    @GetMapping("/orders")
-    public ResponseEntity<ApiResponse> getMember() {
-        ApiResponse apiResponse = memberService.getMemberOrders();
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<ApiResponse> getMemberOrders(@PathVariable Long id) {
+        MemberDomain memberDomain = memberService.getMemberOrders(id);
         return ResponseEntity.ok()
-                .body(apiResponse);
+                .body(ApiResponse.success(
+                        MemberResponseDto.from(memberDomain))
+                );
     }
 
 }

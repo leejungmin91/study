@@ -1,20 +1,16 @@
 package com.min.store.product.service;
 
 
-import com.min.store.common.http.ApiResponse;
-import com.min.store.common.util.EntityConverter;
-import com.min.store.product.domain.Product;
-import com.min.store.product.domain.ProductId;
-import com.min.store.product.dto.request.ProductFormRequestDto;
-import com.min.store.product.dto.response.ProductResponseDto;
+import com.min.store.product.domain.ProductCreateDomain;
+import com.min.store.product.domain.ProductDomain;
+import com.min.store.product.domain.ProductUpdateDomain;
+import com.min.store.product.entity.ProductEntity;
 import com.min.store.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,48 +20,45 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ApiResponse getProducts(){
-        List<Product> product = productRepository.findAll();
-                //.stream()
-                //.sorted(Comparator.comparing(p -> p.getProductId().getId()))
-                //.toList();
+    public List<ProductDomain> getProducts(){
+        List<ProductEntity> productEntities = productRepository.findAll();
 
-        List<ProductResponseDto> responseDtos = product.stream()
-                .map(p -> EntityConverter.toResponse(p, ProductResponseDto.class))
+        return productEntities.stream()
+                .map(ProductEntity::toDomain)
                 .toList();
-
-        return ApiResponse.success(responseDtos);
     }
 
-    public ApiResponse getProduct(Long id){
-        Product product = productRepository.findById(new ProductId(id))
+    public ProductDomain getById(Long id){
+        ProductEntity product = productRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return ApiResponse.success(EntityConverter.toResponse(product, ProductResponseDto.class));
+        return product.toDomain();
     }
 
     @Transactional
-    public ApiResponse register(ProductFormRequestDto productFormRequestDto){
-        Product product = EntityConverter.toEntity(productFormRequestDto, Product.class);//Product.toEntity(productFormRequestDto);
+    public ProductDomain register(ProductCreateDomain productCreateDomain){
 
-        duplicateProductCheck(product);
+        ProductDomain productDomain = ProductDomain.from(productCreateDomain.getName(), productCreateDomain.getPrice());
 
-        productRepository.save(product);
+        duplicateProductCheck(productDomain);
 
-        return ApiResponse.success();
+        ProductEntity productEntity = ProductEntity.from(productDomain);
+
+        return productRepository.save(productEntity)
+                .toDomain();
     }
 
-    private void duplicateProductCheck(Product product){
-        boolean isProduct = productRepository.existsByName(product.getName());
+    private void duplicateProductCheck(ProductDomain productDomain){
+        boolean isProduct = productRepository.existsByName(productDomain.getName());
         if(isProduct) throw new IllegalStateException("이미 등록된 상품입니다.");
     }
 
     @Transactional
-    public ApiResponse update(ProductFormRequestDto productFormRequestDto){
-        Product product = productRepository.findById(new ProductId(productFormRequestDto.getId()))
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다."));
-        product.updateProduct(productFormRequestDto.getName(), productFormRequestDto.getPrice());
+    public ProductDomain update(Long id, ProductUpdateDomain productUpdateDomain){
+        ProductDomain productDomain = getById(id);
+        productDomain.update(productUpdateDomain);
 
-        return ApiResponse.success(product);
+        return productRepository.save(ProductEntity.from(productDomain))
+                .toDomain();
     }
 }
