@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface MemberRepositoryCustom {
 
-    Optional<MemberEntity> findByName(String name);
+    Optional<MemberEntity> findOrderById(Long id);
     
 }

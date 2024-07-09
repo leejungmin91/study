@@ -1,4 +1,4 @@
-package com.min.store.order.domain;
+package com.min.store.order.entity;
 
 public enum OrderStatus {
     ORDER, CANCEL

@@ -1,6 +1,8 @@
 package com.min.store.member.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.min.store.order.domain.OrderDomain;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,21 +12,22 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Setter
 public class MemberDomain implements UserDetails, Serializable {
 
     private final Long id;
     private final String email;
     private final String name;
     private final String password;
+    private final transient List<OrderDomain> orders;
 
     @Builder
-    public MemberDomain(Long id, String email, String name, String password) {
+    public MemberDomain(@JsonProperty("id") Long id, @JsonProperty("email") String email, @JsonProperty("name") String name, @JsonProperty("password") String password, @JsonProperty("orders") List<OrderDomain> orders) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.password = password;
+        this.orders = orders;
     }
 
     public static MemberDomain from(String email, String name, String password) {

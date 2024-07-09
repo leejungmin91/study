@@ -1,17 +1,15 @@
 package com.min.store.member.service;
 
 import com.min.store.member.config.JwtTokenProvider;
-import com.min.store.member.dto.request.LoginRequestDto;
+import com.min.store.member.domain.MemberDomain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,9 +22,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public HttpHeaders authenticate(LoginRequestDto loginRequestDto){
+    public HttpHeaders authenticate(MemberDomain memberDomain){
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberDomain.getEmail(), memberDomain.getPassword());
 
         // security 인증 실행
         Authentication authentication = authenticationManager.authenticate(authenticationToken);

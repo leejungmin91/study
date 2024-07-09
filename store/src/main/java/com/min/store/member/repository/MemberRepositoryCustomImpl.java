@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-import static com.min.store.member.entity.QMember.member;
+import static com.min.store.member.entity.QMemberEntity.memberEntity;
+import static com.min.store.order.entity.QOrderEntity.orderEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,13 +18,14 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     private final JPAQueryFactory query;
 
     @Override
-    public Optional<MemberEntity> findByName(String name) {
-        return Optional.ofNullable(query.selectFrom(member)
-                .where(nameEq(name))
+    public Optional<MemberEntity> findOrderById(Long id) {
+        return Optional.ofNullable(query.selectFrom(memberEntity)
+                .leftJoin(memberEntity.orders).fetchJoin()
+                .where(idEq(id))
                 .fetchFirst());
     }
 
-    private BooleanExpression nameEq(String name) {
-        return name != null ? member.name.eq(name) : null;
+    private BooleanExpression idEq(Long id) {
+        return id != null ? memberEntity.id.eq(id) : null;
     }
 }

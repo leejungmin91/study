@@ -18,12 +18,13 @@ public class SystemUserDetails implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
         log.info("{} - authenticate -> 인증", this.getClass());
 
         return memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Not Found Member"));
+                .orElseThrow(() -> new UsernameNotFoundException("Not Found Member"))
+                .toDomain();
     }
 
     public PasswordEncoder passwordEncoder(){

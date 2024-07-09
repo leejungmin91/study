@@ -2,7 +2,7 @@ package com.min.store.member.controller;
 
 
 import com.min.store.common.http.ApiResponse;
-import com.min.store.member.dto.request.LoginRequestDto;
+import com.min.store.member.domain.MemberDomain;
 import com.min.store.member.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,8 @@ public class AuthContoller {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody @Valid LoginRequestDto loginRequestDto){
-        HttpHeaders httpHeaders = authenticationService.authenticate(loginRequestDto);
+    public ResponseEntity<ApiResponse> login(@RequestBody MemberDomain memberDomain){
+        HttpHeaders httpHeaders = authenticationService.authenticate(memberDomain);
         return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .body(ApiResponse.success());

@@ -1,22 +1,15 @@
 package com.min.store.order.service;
 
 
-import com.min.store.common.http.ApiResponse;
-import com.min.store.common.util.EntityConverter;
-import com.min.store.common.util.Utils;
-import com.min.store.member.entity.MemberEntity;
-import com.min.store.order.domain.*;
-import com.min.store.order.dto.request.OrderRequestDto;
-import com.min.store.order.dto.response.OrderResponseDto;
+import com.min.store.order.domain.OrderCreateDomain;
+import com.min.store.order.domain.OrderDomain;
+import com.min.store.order.entity.OrderEntity;
 import com.min.store.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -25,48 +18,25 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public ApiResponse findOrder(Long id){
-        Order order = orderRepository.findById(new OrderId(id))
+    public OrderDomain findOrder(Long id){
+        OrderEntity order = orderRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return ApiResponse.success(EntityConverter.toResponse(order, OrderResponseDto.class));
+        return order.toDomain();
     }
 
-    public List<Order> findByOrderer(Long id){
+    /*public List<OrderEntity> findByOrderer(Long id){
         return orderRepository.findByOrdererMemberId(new MemberId(id));
-    }
+    }*/
 
     @Transactional
-    public ApiResponse order(OrderRequestDto orderRequestDto){
+    public OrderDomain order(OrderCreateDomain orderCreateDomain){
 
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-        Long dateTimeAsLong = Long.parseLong(now.format(formatter));
+        OrderDomain orderDomain = OrderDomain.from(orderCreateDomain.getMember(), orderCreateDomain.getOrderItems(), orderCreateDomain.getStatus());
 
-        List<OrderItem> orderItems = orderRequestDto.getOrderItems()
-                .stream()
-                .map(dto -> {
-                    ProductId productId = new ProductId(dto.getProductId());
-                    return OrderItem.builder()
-                            .product(productId)
-                            .quantity(dto.getQuantity())
-                            .orderPrice(dto.getPrice())
-                            .build();
-                }).toList();
+        OrderEntity order = OrderEntity.from(orderDomain);
 
-        MemberEntity member = Utils.currentMember();
-
-        MemberId memberId = new MemberId(member.getId());
-
-        Order order = Order.builder()
-                .orderId(new OrderId(dateTimeAsLong))
-                .orderer(new Orderer(memberId, member.getName()))
-                .orderItems(orderItems)
-                .status(OrderStatus.ORDER)
-                .build();
-
-        orderRepository.save(order);
-
-        return ApiResponse.success();
+        return orderRepository.save(order)
+                .toDomain();
     }
 }

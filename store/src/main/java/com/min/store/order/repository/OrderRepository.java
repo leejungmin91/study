@@ -1,11 +1,7 @@
 package com.min.store.order.repository;
 
-import com.min.store.order.domain.Order;
-import com.min.store.order.domain.OrderId;
+import com.min.store.order.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface OrderRepository extends JpaRepository<Order, OrderId> {
-    List<Order> findByOrdererMemberId(MemberId memberId);
+public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 }

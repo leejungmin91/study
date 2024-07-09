@@ -5,7 +5,6 @@ import com.min.store.common.http.ApiResponse;
 import com.min.store.member.domain.MemberDomain;
 import com.min.store.member.domain.MemberSignUpDomain;
 import com.min.store.member.dto.MemberResponseDto;
-import com.min.store.member.dto.request.SignUpRequestDto;
 import com.min.store.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,7 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid MemberSignUpDomain memberSignUpDomain) {
+    public ResponseEntity<ApiResponse> signUp(@RequestBody MemberSignUpDomain memberSignUpDomain) {
         MemberDomain memberDomain = memberService.register(memberSignUpDomain);
         return ResponseEntity.ok()
                 .body(ApiResponse.success(

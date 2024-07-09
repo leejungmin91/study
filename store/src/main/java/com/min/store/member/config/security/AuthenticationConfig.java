@@ -1,4 +1,5 @@
 package com.min.store.member.config.security;
+import com.min.store.member.domain.MemberDomain;
 import com.min.store.member.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AuthenticationConfig implements AuthenticationProvider {
 
     private final SystemUserDetails systemUserDetails;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -25,14 +27,14 @@ public class AuthenticationConfig implements AuthenticationProvider {
 
         String id = (String) token.getPrincipal();
 
-        MemberEntity member = (MemberEntity) systemUserDetails.loadUserByUsername(id);
+        MemberDomain memberDomain = (MemberDomain) systemUserDetails.loadUserByUsername(id);
 
-        if (!passwordEncoder().matches(authentication.getCredentials().toString(), member.encodePassword(member.getPassword()))){
+        if (!passwordEncoder.matches(authentication.getCredentials().toString(), memberDomain.getPassword())){
             throw new BadCredentialsException("Bad Credential");
         }
 
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(member.getUsername(), null, null);
-        result.setDetails(member);
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(memberDomain.getEmail(), null, null);
+        result.setDetails(memberDomain);
 
         return result;
     }
@@ -40,9 +42,5 @@ public class AuthenticationConfig implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
         return true;
-    }
-
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
     }
 }
