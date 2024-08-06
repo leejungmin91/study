@@ -36,7 +36,7 @@ public class OrderEntity {
         orderEntity.orderItems = orderDomain.getOrderItems()
                 .stream()
                 .map(OrderItemEntity::from)
-                .collect(Collectors.toList());
+                .toList();
         orderEntity.status = orderDomain.getStatus();
         return orderEntity;
     }
@@ -47,7 +47,7 @@ public class OrderEntity {
                 .member(member.toDomain())
                 .orderItems(orderItems.stream()
                         .map(OrderItemEntity::toDomain)
-                        .collect(Collectors.toList()))
+                        .toList())
                 .status(status)
                 .build();
     }

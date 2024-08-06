@@ -3,6 +3,7 @@ package com.min.store.product.controller;
 
 import com.min.store.common.http.ApiResponse;
 import com.min.store.product.domain.ProductCreateDomain;
+import com.min.store.product.domain.ProductCreateDomainKotlin;
 import com.min.store.product.domain.ProductDomain;
 import com.min.store.product.domain.ProductUpdateDomain;
 import com.min.store.product.dto.ProductResponseDto;
@@ -44,7 +45,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> register(@RequestBody @Valid ProductCreateDomain productCreateDomain) {
+    //public ResponseEntity<ApiResponse> register(@RequestBody @Valid ProductCreateDomain productCreateDomain) {
+    public ResponseEntity<ApiResponse> register(@RequestBody @Valid ProductCreateDomainKotlin productCreateDomain) {
         ProductDomain productDomain = productService.register(productCreateDomain);
         return ResponseEntity.ok()
                 .body(ApiResponse
