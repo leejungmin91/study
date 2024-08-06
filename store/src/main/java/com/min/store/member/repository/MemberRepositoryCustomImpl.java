@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 import static com.min.store.member.entity.QMemberEntity.memberEntity;
-import static com.min.store.order.entity.QOrderEntity.orderEntity;
 
 @Repository
 @RequiredArgsConstructor
