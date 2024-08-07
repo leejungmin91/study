@@ -27,6 +27,14 @@ public class ProductEntity {
         return productEntity;
     }
 
+    public static ProductEntity fromKotline(ProductDomainKotlin productDomain) {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.id = productDomain.getId();
+        productEntity.name = productDomain.getName();
+        productEntity.price = productDomain.getPrice();
+        return productEntity;
+    }
+
     public ProductDomain toDomain() {
         return ProductDomain.builder()
                 .id(id)

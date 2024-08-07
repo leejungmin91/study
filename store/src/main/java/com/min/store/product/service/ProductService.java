@@ -43,18 +43,26 @@ public class ProductService {
 
     @Transactional
     public ProductDomain register(ProductCreateDomainKotlin productCreateDomain){
+    //public ProductDomain register(ProductCreateDomain productCreateDomain){
 
-        ProductDomain productDomain = ProductDomain.from(productCreateDomain.getName(), productCreateDomain.getPrice());
+        //ProductDomain productDomain = ProductDomain.from(productCreateDomain.getName(), productCreateDomain.getPrice());
+        ProductDomainKotlin productDomain = ProductDomainKotlin.Companion.from(productCreateDomain.getName(), productCreateDomain.getPrice());
 
         duplicateProductCheck(productDomain);
 
-        ProductEntity productEntity = ProductEntity.from(productDomain);
+        //ProductEntity productEntity = ProductEntity.from(productDomain);
+        ProductEntity productEntity = ProductEntity.fromKotline(productDomain);
 
         return productRepository.save(productEntity)
                 .toDomain();
     }
 
-    private void duplicateProductCheck(ProductDomain productDomain){
+    /*private void duplicateProductCheck(ProductDomain productDomain){
+        boolean isProduct = productRepository.existsByName(productDomain.getName());
+        if(isProduct) throw new IllegalStateException("이미 등록된 상품입니다.");
+    }*/
+
+    private void duplicateProductCheck(ProductDomainKotlin productDomain){
         boolean isProduct = productRepository.existsByName(productDomain.getName());
         if(isProduct) throw new IllegalStateException("이미 등록된 상품입니다.");
     }

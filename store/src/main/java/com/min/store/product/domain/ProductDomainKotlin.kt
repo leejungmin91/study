@@ -6,11 +6,13 @@ class ProductDomainKotlin (
     val price: Long
     ) {
 
-    fun from(name: String, price: Long): ProductDomainKotlin {
-        return ProductDomainKotlin(name = name, price = price)
+    companion object {
+        fun from(name: String, price: Long): ProductDomainKotlin {
+            return ProductDomainKotlin(name = name, price = price)
+        }
     }
 
-    fun update(productUpdate: ProductDomainKotlin): ProductDomainKotlin {
+    fun update(productUpdate: ProductUpdateDomain): ProductDomainKotlin {
         return ProductDomainKotlin(id, productUpdate.name, productUpdate.price)
     }
 }
