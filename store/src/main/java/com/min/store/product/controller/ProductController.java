@@ -2,10 +2,7 @@ package com.min.store.product.controller;
 
 
 import com.min.store.common.http.ApiResponse;
-import com.min.store.product.domain.ProductCreateDomain;
-import com.min.store.product.domain.ProductCreateDomainKotlin;
-import com.min.store.product.domain.ProductDomain;
-import com.min.store.product.domain.ProductUpdateDomain;
+import com.min.store.product.domain.*;
 import com.min.store.product.dto.ProductResponseDto;
 import com.min.store.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +34,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getProduct(@PathVariable Long id) {
-        ProductDomain productDomain = productService.getById(id);
+        //ProductDomain productDomain = productService.getById(id);
+        ProductDomainKotlin productDomain = productService.getByIdKotlin(id);
         return ResponseEntity.ok()
                 .body(ApiResponse
                         .success(ProductResponseDto.from(productDomain))

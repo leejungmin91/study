@@ -1,10 +1,7 @@
 package com.min.store.product.service;
 
 
-import com.min.store.product.domain.ProductCreateDomain;
-import com.min.store.product.domain.ProductCreateDomainKotlin;
-import com.min.store.product.domain.ProductDomain;
-import com.min.store.product.domain.ProductUpdateDomain;
+import com.min.store.product.domain.*;
 import com.min.store.product.entity.ProductEntity;
 import com.min.store.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +31,14 @@ public class ProductService {
                 .orElseThrow(EntityNotFoundException::new);
 
         return product.toDomain();
+    }
+
+    public ProductDomainKotlin getByIdKotlin(Long id){
+        ProductEntity product = productRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        //return product.toDomain();
+        return product.toDomainKotlin();
     }
 
     @Transactional

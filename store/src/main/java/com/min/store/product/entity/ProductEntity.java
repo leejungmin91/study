@@ -1,6 +1,7 @@
 package com.min.store.product.entity;
 
 import com.min.store.product.domain.ProductDomain;
+import com.min.store.product.domain.ProductDomainKotlin;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,10 @@ public class ProductEntity {
                 .name(name)
                 .price(price)
                 .build();
+    }
+
+    public ProductDomainKotlin toDomainKotlin() {
+        return new ProductDomainKotlin(id, name, price);
     }
 
 }
