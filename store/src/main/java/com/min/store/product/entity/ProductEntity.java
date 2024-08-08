@@ -27,7 +27,7 @@ public class ProductEntity {
         return productEntity;
     }
 
-    public static ProductEntity fromKotline(ProductDomainKotlin productDomain) {
+    public static ProductEntity fromKotlin(ProductDomainKotlin productDomain) {
         ProductEntity productEntity = new ProductEntity();
         productEntity.id = productDomain.getId();
         productEntity.name = productDomain.getName();

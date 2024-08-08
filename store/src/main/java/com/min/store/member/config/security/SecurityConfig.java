@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(request ->
                         request
-                                .antMatchers("/sample/**", "/h2-console/**", "/member/signup").permitAll()
+                                .antMatchers("/sample/**", "/h2-console/**", "/member/signup", "/product**").permitAll()
                                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
                                 .antMatchers(HttpMethod.POST, "/auth/reissue").permitAll()
                                 .anyRequest().authenticated()

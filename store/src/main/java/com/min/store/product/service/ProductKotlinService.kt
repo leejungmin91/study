@@ -36,7 +36,7 @@ open class ProductKotlinService (private val productRepository: ProductRepositor
 
         duplicateProductCheck(productDomain);
 
-        val productEntity:ProductEntity = ProductEntity.fromKotline(productDomain)
+        val productEntity:ProductEntity = ProductEntity.fromKotlin(productDomain)
 
         return productRepository.save(productEntity)
             .toDomainKotlin()
@@ -52,7 +52,7 @@ open class ProductKotlinService (private val productRepository: ProductRepositor
         val productDomain:ProductDomainKotlin = getById(id);
         productDomain.update(productUpdateDomain)
 
-        return productRepository.save(ProductEntity.fromKotline(productDomain))
+        return productRepository.save(ProductEntity.fromKotlin(productDomain))
             .toDomainKotlin()
     }
 

@@ -51,7 +51,7 @@ public class ProductService {
         duplicateProductCheck(productDomain);
 
         //ProductEntity productEntity = ProductEntity.from(productDomain);
-        ProductEntity productEntity = ProductEntity.fromKotline(productDomain);
+        ProductEntity productEntity = ProductEntity.fromKotlin(productDomain);
 
         return productRepository.save(productEntity)
                 .toDomain();

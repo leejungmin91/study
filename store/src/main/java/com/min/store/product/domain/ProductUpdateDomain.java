@@ -1,9 +1,7 @@
 package com.min.store.product.domain;
 
 import lombok.Builder;
-import lombok.Getter;
 
-@Getter
 public class ProductUpdateDomain {
 
     private final String name;
@@ -13,5 +11,13 @@ public class ProductUpdateDomain {
     public ProductUpdateDomain(String name, Long price) {
         this.name = name;
         this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getPrice() {
+        return price;
     }
 }
