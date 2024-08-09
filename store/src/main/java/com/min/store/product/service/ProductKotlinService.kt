@@ -3,15 +3,12 @@ package com.min.store.product.service
 import com.min.store.product.domain.ProductCreateDomainKotlin
 import com.min.store.product.domain.ProductDomainKotlin
 import com.min.store.product.domain.ProductUpdateDomain
-import com.min.store.product.entity.ProductEntity
+import com.min.store.product.entity.ProductKotlinEntity
 import com.min.store.product.repository.ProductKotlinRepository
-import com.min.store.product.repository.ProductRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.lang.IllegalStateException
-import javax.persistence.EntityNotFoundException
 
 @Service
 @RequiredArgsConstructor
@@ -19,22 +16,22 @@ import javax.persistence.EntityNotFoundException
 open class ProductKotlinService (private val productRepository: ProductKotlinRepository){
 
     fun getProducts() : List<ProductDomainKotlin> {
-        val productEntitys : List<ProductEntity> = productRepository.findAll()
+        val productEntitys : List<ProductKotlinEntity> = productRepository.findAll()
 
-        return productEntitys.map { it.toDomainKotlin() }
+        return productEntitys.map { it.toDomain() }
             .toList()
     }
 
     fun getById(id : Long) : ProductDomainKotlin {
-        val product: ProductEntity = productRepository.findByIdOrNull(id) ?: throw NoSuchElementException()
+        val product: ProductKotlinEntity = productRepository.findByIdOrNull(id) ?: throw NoSuchElementException()
 
-        return product.toDomainKotlin()
+        return product.toDomain()
     }
 
     fun getByName(name : String) : ProductDomainKotlin {
-        val product: ProductEntity = productRepository.findByName(name) ?: throw NoSuchElementException()
+        val product: ProductKotlinEntity = productRepository.findByName(name) ?: throw NoSuchElementException()
 
-        return product.toDomainKotlin()
+        return product.toDomain()
     }
 
     fun register(productCreateDomain:ProductCreateDomainKotlin) : ProductDomainKotlin {
@@ -42,10 +39,10 @@ open class ProductKotlinService (private val productRepository: ProductKotlinRep
 
         duplicateProductCheck(productDomain);
 
-        val productEntity:ProductEntity = ProductEntity.fromKotlin(productDomain)
+        val productEntity:ProductKotlinEntity = ProductKotlinEntity.from(productDomain)
 
         return productRepository.save(productEntity)
-            .toDomainKotlin()
+            .toDomain()
     }
 
     private fun duplicateProductCheck(productDomain : ProductDomainKotlin) {
@@ -58,8 +55,8 @@ open class ProductKotlinService (private val productRepository: ProductKotlinRep
         val productDomain:ProductDomainKotlin = getById(id);
         productDomain.update(productUpdateDomain)
 
-        return productRepository.save(ProductEntity.fromKotlin(productDomain))
-            .toDomainKotlin()
+        return productRepository.save(ProductKotlinEntity.from(productDomain))
+            .toDomain()
     }
 
 
