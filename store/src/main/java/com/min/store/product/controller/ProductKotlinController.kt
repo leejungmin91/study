@@ -7,7 +7,6 @@ import com.min.store.product.dto.ProductResponseDto
 import com.min.store.product.service.ProductKotlinService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RestController
 @RequestMapping("/product-kotlin")
@@ -16,9 +15,7 @@ class ProductKotlinController(private val productService: ProductKotlinService) 
     @GetMapping
     fun getProducts(): ResponseEntity<ApiResponse> {
         val productDomains: List<ProductDomainKotlin> = productService.getProducts()
-        val productResponseDtos: List<ProductResponseDto> = productDomains.stream()
-            .map { ProductResponseDto.from(it) }
-            .toList()
+        val productResponseDtos: List<ProductResponseDto> = productDomains.map { ProductResponseDto.from(it) }
 
         return ResponseEntity.ok()
             .body(ApiResponse.success(productResponseDtos))
@@ -35,7 +32,7 @@ class ProductKotlinController(private val productService: ProductKotlinService) 
     }
 
     @PostMapping
-    fun register(@RequestBody productCreateDomain: @Valid ProductCreateDomainKotlin): ResponseEntity<ApiResponse> {
+    fun register(@RequestBody productCreateDomain: ProductCreateDomainKotlin): ResponseEntity<ApiResponse> {
         val productDomain: ProductDomainKotlin = productService.register(productCreateDomain)
         return ResponseEntity.ok()
             .body(
