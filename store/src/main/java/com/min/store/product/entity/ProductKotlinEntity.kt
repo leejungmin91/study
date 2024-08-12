@@ -6,13 +6,12 @@ import javax.persistence.*
 @Table(name = "PRODUCT")
 @Entity
 class ProductKotlinEntity(
-    id: Long?,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
     val name: String,
     val price: Long,
 ) {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
 
     companion object {
         fun from(productDomainKotlin: ProductDomainKotlin): ProductKotlinEntity {
