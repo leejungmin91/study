@@ -3,6 +3,7 @@ package com.min.store.product.service
 import com.min.store.product.domain.ProductCreateDomainKotlin
 import com.min.store.product.domain.ProductDomainKotlin
 import com.min.store.product.domain.ProductUpdateDomain
+import com.min.store.product.domain.ProductUpdateDomainKotlin
 import com.min.store.product.entity.ProductKotlinEntity
 import com.min.store.product.repository.ProductKotlinRepository
 import lombok.RequiredArgsConstructor
@@ -51,7 +52,7 @@ open class ProductKotlinService (private val productRepository: ProductKotlinRep
     }
 
     @Transactional
-    open fun update(id: Long, productUpdateDomain: ProductUpdateDomain) : ProductDomainKotlin {
+    open fun update(id: Long, productUpdateDomain: ProductUpdateDomainKotlin) : ProductDomainKotlin {
         val productDomain:ProductDomainKotlin = getById(id);
         productDomain.update(productUpdateDomain)
 

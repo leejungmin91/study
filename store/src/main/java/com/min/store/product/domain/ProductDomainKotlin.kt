@@ -12,7 +12,7 @@ class ProductDomainKotlin (
         }
     }
 
-    fun update(productUpdate: ProductUpdateDomain): ProductDomainKotlin {
+    fun update(productUpdate: ProductUpdateDomainKotlin): ProductDomainKotlin {
         return ProductDomainKotlin(id, productUpdate.name, productUpdate.price)
     }
 }
