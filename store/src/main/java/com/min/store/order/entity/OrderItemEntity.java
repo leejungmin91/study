@@ -30,7 +30,7 @@ public class OrderItemEntity {
     public static OrderItemEntity from(OrderItemDomain orderItemDomain) {
         OrderItemEntity orderEntity = new OrderItemEntity();
         orderEntity.id = orderItemDomain.getId();
-        orderEntity.product = ProductEntity.from(orderItemDomain.getProduct());
+        orderEntity.product = ProductEntity.Companion.from(orderItemDomain.getProduct());
         orderEntity.order = OrderEntity.from(orderItemDomain.getOrder());
         orderEntity.orderPrice = orderItemDomain.getOrderPrice();
         orderEntity.count = orderItemDomain.getCount();

@@ -1,20 +1,20 @@
 package com.min.store.product.controller
 
 import com.min.store.common.http.ApiResponse
-import com.min.store.product.domain.ProductCreateDomainKotlin
-import com.min.store.product.domain.ProductDomainKotlin
+import com.min.store.product.domain.ProductCreateDomain
+import com.min.store.product.domain.ProductDomain
 import com.min.store.product.dto.ProductResponseDto
-import com.min.store.product.service.ProductKotlinService
+import com.min.store.product.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/product-kotlin")
-class ProductKotlinController(private val productService: ProductKotlinService) {
+class ProductController(private val productService: ProductService) {
 
     @GetMapping
     fun getProducts(): ResponseEntity<ApiResponse> {
-        val productDomains: List<ProductDomainKotlin> = productService.getProducts()
+        val productDomains: List<ProductDomain> = productService.getProducts()
         val productResponseDtos: List<ProductResponseDto> = productDomains.map { ProductResponseDto.from(it) }
 
         return ResponseEntity.ok()
@@ -23,7 +23,7 @@ class ProductKotlinController(private val productService: ProductKotlinService) 
 
     @GetMapping("/{id}")
     fun getProduct(@PathVariable id: Long): ResponseEntity<ApiResponse> {
-        val productDomain: ProductDomainKotlin = productService.getById(id)
+        val productDomain: ProductDomain = productService.getById(id)
         return ResponseEntity.ok()
             .body(
                 ApiResponse
@@ -32,8 +32,8 @@ class ProductKotlinController(private val productService: ProductKotlinService) 
     }
 
     @PostMapping
-    fun register(@RequestBody productCreateDomain: ProductCreateDomainKotlin): ResponseEntity<ApiResponse> {
-        val productDomain: ProductDomainKotlin = productService.register(productCreateDomain)
+    fun register(@RequestBody productCreateDomain: ProductCreateDomain): ResponseEntity<ApiResponse> {
+        val productDomain: ProductDomain = productService.register(productCreateDomain)
         return ResponseEntity.ok()
             .body(
                 ApiResponse

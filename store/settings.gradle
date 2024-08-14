@@ -3,3 +3,5 @@
  */
 
 rootProject.name = 'store'
+include 'store-core'
+include 'store-product-api'

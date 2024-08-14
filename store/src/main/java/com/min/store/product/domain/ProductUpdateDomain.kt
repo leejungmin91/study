@@ -1,6 +1,6 @@
 package com.min.store.product.domain
 
-class ProductUpdateDomainKotlin(
+class ProductUpdateDomain(
     val name: String,
     val price: Long
 ) {
