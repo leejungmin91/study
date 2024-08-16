@@ -1,10 +1,10 @@
-package com.store.product.api.controller
+package com.store.productapi.controller
 
-import com.store.core.storecore.http.ApiResponse
-import com.store.product.api.domain.ProductCreateDomain
-import com.store.product.api.domain.ProductDomain
-import com.store.product.api.dto.ProductResponseDto
-import com.store.product.api.service.ProductService
+import com.store.core.domain.product.ProductCreateDomain
+import com.store.core.domain.product.ProductDomain
+import com.store.core.http.ApiResponse
+import com.store.productapi.dto.ProductResponseDto
+import com.store.productapi.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 

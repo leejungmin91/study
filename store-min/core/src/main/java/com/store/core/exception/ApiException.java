@@ -1,6 +1,6 @@
-package com.store.core.storecore.exception;
+package com.store.core.exception;
 
-import com.store.core.storecore.http.ApiCode;
+import com.store.core.http.ApiCode;
 import lombok.Getter;
 
 import java.io.Serial;

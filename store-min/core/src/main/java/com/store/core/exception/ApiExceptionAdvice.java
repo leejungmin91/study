@@ -1,7 +1,7 @@
-package com.store.core.storecore.exception;
+package com.store.core.exception;
 
-import com.store.core.storecore.http.ApiCode;
-import com.store.core.storecore.http.ApiResponse;
+import com.store.core.http.ApiCode;
+import com.store.core.http.ApiResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;

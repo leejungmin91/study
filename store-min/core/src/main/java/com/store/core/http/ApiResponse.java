@@ -1,6 +1,6 @@
-package com.store.core.storecore.http;
+package com.store.core.http;
 
-import com.store.core.storecore.exception.ApiException;
+import com.store.core.exception.ApiException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

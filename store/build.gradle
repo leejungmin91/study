@@ -51,6 +51,8 @@ subprojects {
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '17'
 
+    //id 'org.springframework.boot' version '2.5.4'
+
     apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
@@ -69,6 +71,12 @@ subprojects {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        // jwt
+        implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
     }
@@ -94,5 +102,24 @@ project(':store-product-api') {
     jar.enabled = true
 
     dependencies {
+        compileOnly project(':store-core')
+    }
+}
+
+project(':store-order-api') {
+
+    jar.enabled = true
+
+    dependencies {
+        compileOnly project(':store-core')
+    }
+}
+
+project(':store-member-api') {
+
+    jar.enabled = true
+
+    dependencies {
+        compileOnly project(':store-core')
     }
 }

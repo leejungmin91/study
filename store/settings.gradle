@@ -3,5 +3,8 @@
  */
 
 rootProject.name = 'store'
+
 include 'store-core'
 include 'store-product-api'
+include 'store-member-api'
+include 'store-order-api'
