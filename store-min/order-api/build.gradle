@@ -1,4 +1,10 @@
+jar {
+    enabled = false
+}
+
 dependencies {
+    implementation project(path: ':core')
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 
@@ -10,7 +16,4 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt"
     annotationProcessor 'javax.persistence:javax.persistence-api'
     annotationProcessor 'javax.annotation:javax.annotation-api'
-}
-repositories {
-    mavenCentral()
 }

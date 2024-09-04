@@ -21,13 +21,13 @@ class ProductService (private val productRepository: ProductRepository){
     }
 
     fun getById(id : Long) : ProductDomain {
-        val product: ProductEntity = productRepository.findByIdOrNull(id) ?: throw NoSuchElementException()
+        val product = productRepository.findByIdOrNull(id) ?: throw NoSuchElementException()
 
         return product.toDomain()
     }
 
     fun getByName(name : String) : ProductDomain {
-        val product: ProductEntity = productRepository.findByName(name) ?: throw NoSuchElementException()
+        val product = productRepository.findByName(name) ?: throw NoSuchElementException()
 
         return product.toDomain()
     }
@@ -49,7 +49,7 @@ class ProductService (private val productRepository: ProductRepository){
     }
 
     @Transactional
-    open fun update(id: Long, productUpdateDomain: ProductUpdateDomain) : ProductDomain {
+    fun update(id: Long, productUpdateDomain: ProductUpdateDomain) : ProductDomain {
         val productDomain: ProductDomain = getById(id)
         productDomain.update(productUpdateDomain)
 
